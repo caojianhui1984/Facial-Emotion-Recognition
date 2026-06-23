@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2D 人脸面部情绪识别</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Real-time 2D Facial Emotion Recognition</p>
+          <h1>基于普通摄像头的人脸情绪识别网页版应用</h1>
+          <p class="lead">融合 MediaPipe 478 点面部网格、52 维表情 blendshape、头部姿态和时序平滑，实时估计焦虑、困惑、疲劳、专注、兴奋、厌倦、压力七类状态。</p>
+        </div>
+        <div class="status-card">
+          <span id="runtimeStatus" class="status-pill idle">模型未加载</span>
+          <button id="cameraButton" class="primary">启动摄像头</button>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <div class="video-card">
+          <video id="webcam" autoplay playsinline muted></video>
+          <canvas id="overlay"></canvas>
+          <div class="dominant">
+            <span>当前主状态</span>
+            <strong id="dominantEmotion">等待检测</strong>
+            <small id="dominantScore">--</small>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <h2>七类情绪/状态评分</h2>
+          <div id="emotionList" class="emotion-list"></div>
+          <div class="metrics">
+            <div><span>FPS</span><strong id="fps">0</strong></div>
+            <div><span>置信度</span><strong id="quality">--</strong></div>
+            <div><span>鲁棒帧</span><strong id="stableFrames">0</strong></div>
+          </div>
+          <div class="explain">
+            <h3>工程策略</h3>
+            <ul>
+              <li>多人脸场景固定选择最大且最稳定的人脸。</li>
+              <li>指数滑动平均降低抖动，离线阈值避免频繁跳变。</li>
+              <li>人脸过小、遮挡或丢帧时自动降权并保留短时预测。</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+    </main>
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>
